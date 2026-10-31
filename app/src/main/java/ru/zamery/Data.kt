@@ -86,10 +86,29 @@ fun fmtDelta(v: Double): String = when {
     else -> "0"
 }
 
-private val months = listOf("янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек")
+private val months = listOf("янв.", "февр.", "мар.", "апр.", "мая", "июн.", "июл.", "авг.", "сент.", "окт.", "нояб.", "дек.")
 private val monthsFull = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря")
+private val weekdays = listOf("пн", "вт", "ср", "чт", "пт", "сб", "вс")
 
 fun dateShort(d: LocalDate) = "${d.dayOfMonth} ${months[d.monthValue - 1]}"
+
+/** «1 июля» (+ год, если не текущий) — для подписи «с 1 июля». */
+fun dateFrom(d: LocalDate) =
+    "${d.dayOfMonth} ${monthsFull[d.monthValue - 1]}" + if (d.year != LocalDate.now().year) " ${d.year}" else ""
+
+/** «12 ноября 2026, вт» — для поля даты в форме. */
+fun dateFull(d: LocalDate) =
+    "${d.dayOfMonth} ${monthsFull[d.monthValue - 1]} ${d.year}, ${weekdays[d.dayOfWeek.value - 1]}"
+
+fun fmtPercent(v: Double): String = fmtDelta(v) + "%"
+
+/** Цель по весу (0 — не задана). Храним в настройках приложения. */
+class Settings(context: Context) {
+    private val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    var goal: Double?
+        get() = prefs.getFloat("goal", 0f).takeIf { it > 0f }?.toDouble()
+        set(v) { prefs.edit().putFloat("goal", (v ?: 0.0).toFloat()).apply() }
+}
 fun dateLong(d: LocalDate): String {
     val today = LocalDate.now()
     return when (d) {
