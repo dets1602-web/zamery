@@ -15,6 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Датчик для пульта «Уклада»: отдаёт сводку по замерам -->
+        <receiver
+            android:name=".UkladSensor"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="ru.uklad.SENSOR" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="ru.zamery.app.files"

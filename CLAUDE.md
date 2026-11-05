@@ -8,3 +8,5 @@
 - В сессии Claude нет Android SDK — компилируется только на GitHub; ошибки читать через
   `gh api repos/dets1602-web/zamery/check-runs/<job>/annotations` (только REST, GraphQL запрещён).
 - Перед правкой интерфейса читать PRODUCT.md и DESIGN.md.
+- Датчик для «Уклада»: UkladSensor.kt, action `ru.uklad.SENSOR`, ответ JSON в resultData (сфера «Здоровье»).
+  Договор — docs/sensors.md в репозитории uklad. Переписка — «Почта между чатами», раздел «Замерам».
